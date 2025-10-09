@@ -13,7 +13,7 @@ export default function Navigation() {
                 <div className="flex items-center justify-between h-16">
                     <Link href="/" className="flex items-center gap-2 text-primary hover:text-accent transition-colors">
                         <Library className="h-6 w-6" />
-                        <span className="font-semibold text-lg">Home</span>
+                        <span className="font-semibold text-lg">Bookie</span>
                     </Link>
 
                     <div className="flex items-center gap-6">
@@ -25,7 +25,7 @@ export default function Navigation() {
                                 }`}
                         >
                             <BookOpen className="h-4 w-4" />
-                            <span>Shelf</span>
+                            <span>Полиця</span>
                         </Link>
 
                         <Link
@@ -36,7 +36,7 @@ export default function Navigation() {
                                 }`}
                         >
                            <Plus className="h-4 w-4" />
-                            <span>Add Book</span>
+                            <span>Додати книгу</span>
                         </Link>
                     </div>
                 </div>
