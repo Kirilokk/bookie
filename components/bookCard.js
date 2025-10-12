@@ -6,9 +6,9 @@ import { statusLabels } from "../app/books.js";
 const S33_BUCKET_URL = 'https://kirilok-nextjs-demo-users-image.s3.eu-north-1.amazonaws.com/';
 
 const statusColors = {
-    to_read: "bg-muted text-muted-foreground border-transparent bg-primary text-primary-foreground hover:bg-primary/80",
-    in_progress: "bg-accent/20 text-accent border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80",
-    read: "bg-primary/20 text-primary border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80",
+  to_read: "bg-muted text-muted-foreground",
+  in_progress: "bg-accent/20 text-accent",
+  read: "bg-primary/20 text-primary",
 };
 
 export default function BookCard({ book }) {
