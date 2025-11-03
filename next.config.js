@@ -2,16 +2,16 @@
 const nextConfig = {
   experimental: {
     serverActions: {
-      bodySizeLimit: '4mb',
+      bodySizeLimit: "4mb",
     },
   },
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'kirilok-nextjs-demo-users-image.s3.eu-north-1.amazonaws.com',
-        port: '',
-        pathname: '/images/**', // Matches all files in the images folder
+        protocol: "https",
+        hostname: process.env.NEXT_PUBLIC_REMOTE_IMAGE_HOST,
+        port: "",
+        pathname: "/images/**", // Matches all files in the images folder
       },
     ],  },
 };

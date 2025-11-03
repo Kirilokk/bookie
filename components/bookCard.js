@@ -3,7 +3,6 @@ import Image from "next/image";
 import Badge from "./ui/badge.js";
 import { statusLabels } from "../app/books.js";
 
-const S33_BUCKET_URL = 'https://kirilok-nextjs-demo-users-image.s3.eu-north-1.amazonaws.com/';
 
 const statusColors = {
   to_read: "bg-muted text-muted-foreground",
@@ -20,7 +19,7 @@ export default function BookCard({ book }) {
                     style={{ backgroundColor: book.coverColor }}
                 >
                     <Image
-                        src={`${S33_BUCKET_URL}${book.image}`}
+                        src={`https://${process.env.NEXT_PUBLIC_REMOTE_IMAGE_HOST}/${book.image}`}
                         alt={book.title}
                         width={100}
                         height={150}

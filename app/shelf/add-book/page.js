@@ -1,14 +1,18 @@
-'use client';
-import { useActionState } from 'react';
-import { useRouter } from 'next/navigation';
-import { addBook } from '@/lib/actions';
-import Label from '@/components/ui/label';
-import Input from '@/components/ui/input';
-import Button from '@/components/ui/button';
+"use client";
+import { useActionState } from "react";
+import { useRouter } from "next/navigation";
+import { addBook } from "@/lib/actions";
+import Label from "@/components/ui/label";
+import Input from "@/components/ui/input";
+
+import Button from "@/components/ui/button";
+import { useState } from "react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export default function AddNewBook() {
     const router = useRouter();
     const [state, formAction] = useActionState(addBook, { message: null });
+    const [selectStatus, setSelectStatus] = useState("");
 
     return (
         <>
@@ -21,25 +25,41 @@ export default function AddNewBook() {
                             <p>
                                 <Label htmlFor='book-name'>Назва</Label>
 
-                                <Input type="text" name="book-name"/>
+                                <Input type="text" name="book-name" />
                             </p>
                             <p>
                                 <Label htmlFor='book-author'>Автор</Label>
-                                <Input type="text" name="book-author"/>
+                                <Input type="text" name="book-author" />
                             </p>
                         </div>
-                        <p>
-                            <Label htmlFor='book-status'>Статус</Label>
-                            <Input type="text" name="book-status"/>
-                        </p>
+
+
+                        <div className="space-y-2">
+                            <Label htmlFor="status">Статус читання</Label>
+                            <Select value={selectStatus} onValueChange={setSelectStatus}>
+
+                                <SelectTrigger id="status" className="bg-background">
+                                    <SelectValue placeholder="" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="to_read">Прочитати</SelectItem>
+                                    <SelectItem value="in_progress">Читаю</SelectItem>
+                                    <SelectItem value="read">Прочитано</SelectItem>
+                                </SelectContent>
+                            </Select>
+
+                            <input type="hidden" name="book-status" value={selectStatus} />
+                        </div>
+
+
                         {state.message && <p>{state.message}</p>}
                         <div className='flex gap-3'>
                             <Button className='flex-1' type='submit'>Додати</Button>
-                            <Button 
-                                variant='outline' 
+                            <Button
+                                variant='outline'
                                 type='button'
-                                onClick={() => {router.push('/shelf');}}
-                                >Відміна</Button>
+                                onClick={() => { router.push("/shelf"); }}
+                            >Відміна</Button>
                         </div>
                     </form>
                 </div>

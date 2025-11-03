@@ -5,11 +5,9 @@ import { FlatCompat } from "@eslint/eslintrc";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-});
+const compat = new FlatCompat({ baseDirectory: __dirname });
 
-const eslintConfig = [
+export default [
   ...compat.extends("next/core-web-vitals"),
   {
     ignores: [
@@ -17,9 +15,12 @@ const eslintConfig = [
       ".next/**",
       "out/**",
       "build/**",
-      "next-env.d.ts",
+      "next-env.d.ts"
     ],
-  },
+    rules: {
+      semi: ["error", "always"],
+      quotes: ["error", "double"],
+      "no-unused-vars": ["warn"]
+    }
+  }
 ];
-
-export default eslintConfig;

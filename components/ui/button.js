@@ -4,7 +4,7 @@ export default function Button({ type, className, children, variant = "default",
     const variants = {
         default: "bg-primary text-primary-foreground hover:bg-primary/90",
         outline: "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
-    }
+    };
 
     const variantClass = variants[variant] || variants["default"];
 
@@ -15,5 +15,5 @@ export default function Button({ type, className, children, variant = "default",
             {...props}>
             {children}
         </button>
-    </>
+    </>;
 }
