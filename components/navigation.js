@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BookOpen, Plus, Library } from "lucide-react";
+import { BookOpen, Plus, Library, Home } from "lucide-react";
 
 export default function Navigation() {
     const currentPath = usePathname();
@@ -18,8 +18,19 @@ export default function Navigation() {
 
                     <div className="flex items-center gap-6">
                         <Link
-                            href="/shelf"
+                            href="/"
                             className={`flex items-center gap-2 transition-colors ${isActive("/")
+                                    ? "text-primary font-medium"
+                                    : "text-muted-foreground hover:text-foreground"
+                                }`}
+                        >
+                            <Home className="h-4 w-4" />
+                            <span>Головна</span>
+                        </Link>
+
+                        <Link
+                            href="/shelf"
+                            className={`flex items-center gap-2 transition-colors ${isActive("/shelf")
                                     ? "text-primary font-medium"
                                     : "text-muted-foreground hover:text-foreground"
                                 }`}
@@ -30,7 +41,7 @@ export default function Navigation() {
 
                         <Link
                             href="/shelf/add-book"
-                            className={`flex items-center gap-2 transition-colors ${isActive("/add-book")
+                            className={`flex items-center gap-2 transition-colors ${isActive("/shelf/add-book")
                                     ? "text-primary font-medium"
                                     : "text-muted-foreground hover:text-foreground"
                                 }`}

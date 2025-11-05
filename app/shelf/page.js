@@ -1,12 +1,8 @@
-import fs from "fs/promises";
-import path from "path";
 import BookList from "@/components/bookList";
+import { getAllMBooks } from "@/lib/book";
 
 export default async function BookShelf() {
-  const filePath = path.join(process.cwd(), "data", "books.json");
-  const data = await fs.readFile(filePath, "utf8");
-  const books = JSON.parse(data);
-
+  const books = await getAllMBooks();
 
   return <BookList initialBooks={books} />;
 };

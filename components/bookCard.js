@@ -17,7 +17,7 @@ export default function BookCard({ book }) {
                 <div
                     className="w-full h-48 rounded-md mb-4 flex items-center justify-center text-card-foreground/60 font-medium transition-transform group-hover:scale-105"
                     style={{ backgroundColor: book.coverColor }}
-                >
+                >   
                     <Image
                         src={`https://${process.env.NEXT_PUBLIC_REMOTE_IMAGE_HOST}/${book.image}`}
                         alt={book.title}

@@ -1,3 +1,7 @@
+const sql = require('better-sqlite3');
+const db = sql('books.db');
+
+const dummyBooks = 
 [
   {
     "id": "1",
@@ -5,7 +9,7 @@
     "author": "F. Scott Fitzgerald",
     "status": "read",
     "coverColor": "hsl(145, 55%, 75%)",
-    "image": "images/to-kill-mockbird.jpg"
+        "image": "images/the-great-gatsby.jpg"
   },
   {
     "id": "2",
@@ -13,7 +17,7 @@
     "author": "Harper Lee",
     "status": "in_progress",
     "coverColor": "hsl(160, 45%, 70%)",
-    "image": "images/the-great-gatsby.jpg"
+    "image": "images/to-kill-mockbird.jpg"
   },
   {
     "id": "3",
@@ -48,11 +52,37 @@
     "coverColor": "hsl(0 0% 100%)"
   },
   {
-    "title": "фіа",
-    "author": "іаф",
+    "title": "Якась книга",
+    "author": "іафі",
     "status": "in_progress",
-    "id": "82e3ecbd-cfb9-4489-b966-883a97c59a3b",
+    "id": "e75754a8-8d00-43dc-a959-d5b7015fa6ae",
     "image": "images/default.jpg",
     "coverColor": "hsl(0 0% 100%)"
   }
-]
+];
+
+db.prepare(`
+   CREATE TABLE IF NOT EXISTS books (
+       id INTEGER PRIMARY KEY AUTOINCREMENT,
+       title TEXT NOT NULL,
+       author TEXT NOT NULL,
+       status TEXT NOT NULL,
+       coverColor TEXT NOT NULL,
+       image TEXT NOT NULL
+   )
+`).run();
+
+function initData() {
+  const stmt = db.prepare(`
+      INSERT INTO books (title, author, status, coverColor, image)
+      VALUES (@title, @author,
+              @status, @coverColor, @image)
+   `);
+
+  for (const book of dummyBooks) {
+    stmt.run(book);
+  }
+}
+
+console.log('Loading initial data...');
+initData();

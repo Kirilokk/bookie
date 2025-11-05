@@ -12,7 +12,7 @@ export default function BookList({ initialBooks }) {
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-foreground mb-2">Моя полиця</h1>
           <p className="text-muted-foreground">
-            {books.length} {books.length === 1 ? "книга" : "книги"} в моїй колекції
+            {books.length} {books.length === 1 ? "книга" : "книги"} в колекції
           </p>
         </div>
 

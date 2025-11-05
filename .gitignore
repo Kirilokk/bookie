@@ -43,3 +43,6 @@ next-env.d.ts
 
 # cache
 .eslintcache
+
+# local files
+books.db
