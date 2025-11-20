@@ -1,17 +1,16 @@
 'use client';
 import { ArrowLeft } from "lucide-react";
 import Button from "@/components/ui/button";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { redirect } from "next/navigation";
 import Image from "next/image";
 import { statusLabels } from "@/lib/constants.js";
 import { Card } from "@/components/ui/card";
+import { useToast } from "@/hooks/use_toast";
 
 export default function BookItem({ book }) {
-    const router = useRouter();
     const [status, setStatus] = useState(book?.status || "to_read");
-
+    const { toast } = useToast();
 
     if (!book) {
         return redirect("/shelf");

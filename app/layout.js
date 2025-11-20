@@ -1,7 +1,6 @@
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navigation from "@/components/navigation";
-
+import { Toaster } from "@/components/ui/toaster";
 
 
 export const metadata = {
@@ -14,6 +13,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <Navigation/> 
+        <Toaster />
         {children}
         </body>
     </html>
