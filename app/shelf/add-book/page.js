@@ -44,7 +44,7 @@ export default function AddNewBook() {
                                 </SelectTrigger>
                                 <SelectContent>
                                     <SelectItem value="to_read">Прочитати</SelectItem>
-                                    <SelectItem value="in_reading">Читаю</SelectItem>
+                                    <SelectItem value="in_progress">Читаю</SelectItem>
                                     <SelectItem value="read">Прочитано</SelectItem>
                                 </SelectContent>
                             </Select>
