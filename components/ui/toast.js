@@ -3,6 +3,7 @@ import * as ToastPrimitives from "@radix-ui/react-toast";
 import { X } from "lucide-react";
 
 import { cn } from "@/lib/utils";
+import { cva } from "class-variance-authority";
 
 const ToastProvider = ToastPrimitives.Provider;
 
@@ -20,14 +21,27 @@ function ToastViewport({ className, ref, ...props }) {
 };
 ToastViewport.displayName = ToastPrimitives.Viewport.displayName;
 
-function Toast({ className, ref, ...props }) {
+const toastVariants = cva(
+  "group pointer-events-auto relative flex w-full items-center justify-between space-x-4 overflow-hidden rounded-md border-2 p-6 pr-8 shadow-xl transition-all data-[swipe=cancel]:translate-x-0 data-[swipe=end]:translate-x-[var(--radix-toast-swipe-end-x)] data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] data-[swipe=move]:transition-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[swipe=end]:animate-out data-[state=closed]:fade-out-80 data-[state=closed]:slide-out-to-right-full data-[state=open]:slide-in-from-top-full data-[state=open]:sm:slide-in-from-bottom-full",
+  {
+    variants: {
+      variant: {
+        default: "border-primary/40 bg-card text-card-foreground shadow-primary/20",
+        destructive: "destructive group border-destructive bg-destructive text-destructive-foreground shadow-destructive/30",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+    },
+  },
+);
+
+
+function Toast({ className, variant, ref, ...props }) {
     return (
         <ToastPrimitives.Root
             ref={ref}
-            className={cn(
-                "group pointer-events-auto relative flex w-full items-center justify-between space-x-4 overflow-hidden rounded-md border-2 p-6 pr-8 shadow-xl transition-all data-[swipe=cancel]:translate-x-0 data-[swipe=end]:translate-x-[var(--radix-toast-swipe-end-x)] data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] data-[swipe=move]:transition-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[swipe=end]:animate-out data-[state=closed]:fade-out-80 data-[state=closed]:slide-out-to-right-full data-[state=open]:slide-in-from-top-full data-[state=open]:sm:slide-in-from-bottom-full border-primary/40 bg-card text-card-foreground shadow-primary/20",
-                className
-            )}
+            className={cn(toastVariants({ variant }), className)}
             {...props}
         />
     );

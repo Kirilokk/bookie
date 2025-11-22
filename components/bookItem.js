@@ -1,15 +1,17 @@
 'use client';
 import { ArrowLeft } from "lucide-react";
 import Button from "@/components/ui/button";
-import { useState } from "react";
+import { useTransition, useState } from "react";
 import { redirect } from "next/navigation";
 import Image from "next/image";
 import { statusLabels } from "@/lib/constants.js";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/hooks/use_toast";
+import { setBookStatus } from "@/lib/book";
 
 export default function BookItem({ book }) {
     const [status, setStatus] = useState(book?.status || "to_read");
+    const [isPending, startTransition] = useTransition();
     const { toast } = useToast();
 
     if (!book) {
@@ -17,11 +19,31 @@ export default function BookItem({ book }) {
     }
 
     function handleStatusChange(newStatus) {
+        if (isPending || newStatus === status) return;
+
+        const previousStatus = status;
+
+        // Set optimistically new status
         setStatus(newStatus);
-        toast({
-            title: "Статус оновлено",
-            description: `Книга позначена як ${statusLabels[newStatus].toLowerCase()}`,
-        });
+
+        startTransition(async () => {
+            const result = await setBookStatus(book.id, newStatus);
+
+            if (result.success) {
+                toast({
+                    title: "Статус оновлено",
+                    description: `Книга позначена як ${statusLabels[newStatus].toLowerCase()}`,
+                });
+            }
+            else {
+                setStatus(previousStatus);
+                toast({
+                    title: "Помилка оновлення",
+                    description: result.error || "Не вдалося зберегти статус.",
+                    variant: "destructive",
+                });
+            }
+        })
     }
 
     return (
