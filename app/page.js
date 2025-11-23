@@ -1,30 +1,30 @@
-import {Card, CardHeader, CardTitle, CardDescription, CardContent} from "@/components/ui/card";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { BookOpen, TrendingUp, Heart } from "lucide-react";
 import Link from "next/link";
 import BookCard from "@/components/bookCard";
 import Badge from "@/components/ui/badge";
-import { getAllMBooks } from "@/lib/book";
+import { getAllBooks } from "@/lib/book";
 
 export default async function Home() {
-  const books = await getAllMBooks();
+  const books = await getAllBooks();
   const totalBooks = books.length;
   const readBooks = books.filter(book => book.status === "read").length;
   const favoriteGenres = ["Fiction", "Classic", "Philosophy"];
 
   // Get last 3 added books for "Recently Added" section
   const recentBooks = books.slice(0, 3);
-  
+
   // Mock recommendations
   const recommendations = books.filter(book => book.status === "to_read");
 
-const dailyQuote = {
-  text: "A room without books is like a body without a soul.",
-  author: "Marcus Tullius Cicero",
-};
+  const dailyQuote = {
+    text: "A room without books is like a body without a soul.",
+    author: "Marcus Tullius Cicero",
+  };
 
- return (
+  return (
     <div className="min-h-screen bg-background">
-      
+
       <main className="container mx-auto px-4 py-8">
         <div className="mb-10">
           <h1 className="text-4xl font-bold text-foreground mb-2">Вітаємо в Bookie</h1>
@@ -90,8 +90,8 @@ const dailyQuote = {
           <div>
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-2xl font-semibold text-foreground">Нещодавно додані</h2>
-              <Link 
-                href="/shelf" 
+              <Link
+                href="/shelf"
                 className="text-sm text-primary hover:text-accent transition-colors"
               >
                 Переглянути усі →

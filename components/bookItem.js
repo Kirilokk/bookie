@@ -102,15 +102,15 @@ export default function BookItem({ book }) {
                         </AlertDialogTrigger>
                         <AlertDialogContent>
                             <AlertDialogHeader>
-                                <AlertDialogTitle>Delete this book?</AlertDialogTitle>
+                                <AlertDialogTitle>Видалити цю книгу?</AlertDialogTitle>
                                 <AlertDialogDescription>
-                                    Are you sure you want to delete "{book.title}"? This action cannot be undone.
+                                    Ви впевнені, що хочете прибрати <b>"{book.title}"</b>? Це незворотня дія.
                                 </AlertDialogDescription>
                             </AlertDialogHeader>
                             <AlertDialogFooter>
-                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                <AlertDialogCancel>Відміна</AlertDialogCancel>
                                 <AlertDialogAction onClick={handleDelete} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
-                                    Delete
+                                    Видалити
                                 </AlertDialogAction>
                             </AlertDialogFooter>
                         </AlertDialogContent>
@@ -169,3 +169,4 @@ export default function BookItem({ book }) {
         </div>
     );
 };
+
