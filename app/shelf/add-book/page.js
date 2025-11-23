@@ -5,7 +5,7 @@ import { addBook } from "@/lib/actions";
 import Label from "@/components/ui/label";
 import Input from "@/components/ui/input";
 
-import Button from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
@@ -44,7 +44,7 @@ export default function AddNewBook() {
                                 </SelectTrigger>
                                 <SelectContent>
                                     <SelectItem value="to_read">Прочитати</SelectItem>
-                                    <SelectItem value="in_progress">Читаю</SelectItem>
+                                    <SelectItem value="in_reading">Читаю</SelectItem>
                                     <SelectItem value="read">Прочитано</SelectItem>
                                 </SelectContent>
                             </Select>
@@ -55,10 +55,9 @@ export default function AddNewBook() {
 
                         {state.message && <p>{state.message}</p>}
                         <div className='flex gap-3'>
-                            <Button className='flex-1' type='submit'>Додати</Button>
+                            <Button className='flex-1'>Додати</Button>
                             <Button
                                 variant='outline'
-                                type='button'
                                 onClick={() => { router.push("/shelf"); }}
                             >Відміна</Button>
                         </div>

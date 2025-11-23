@@ -92,45 +92,46 @@ SelectContent.displayName = SelectPrimitive.Content.displayName;
 
 function SelectLabel({ className, ...props }, ref) {
     return (
-    <SelectPrimitive.Label
-        ref={ref}
-        className={cn("py-1.5 pl-8 pr-2 text-sm font-semibold", className)}
-        {...props}
-    />
-);
+        <SelectPrimitive.Label
+            ref={ref}
+            className={cn("py-1.5 pl-8 pr-2 text-sm font-semibold", className)}
+            {...props}
+        />
+    );
 }
 SelectLabel.displayName = SelectPrimitive.Label.displayName;
 
 function SelectItem({ className, children, ...props }, ref) {
     return (
-    <SelectPrimitive.Item
-        ref={ref}
-        className={cn(
-            "relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 focus:bg-accent focus:text-accent-foreground",
-            className
-        )}
-        {...props}
-    >
-        <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
-            <SelectPrimitive.ItemIndicator>
-                <Check className="h-4 w-4" />
-            </SelectPrimitive.ItemIndicator>
-        </span>
+        <SelectPrimitive.Item
+            ref={ref}
+            className={cn(
+                "relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 focus:bg-accent focus:text-accent-foreground",
+                className
+            )}
+            {...props}
+        >
+            <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
+                <SelectPrimitive.ItemIndicator>
+                    <Check className="h-4 w-4" />
+                </SelectPrimitive.ItemIndicator>
+            </span>
 
-        <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
-    </SelectPrimitive.Item>
-);
+            <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
+        </SelectPrimitive.Item>
+    );
 }
 SelectItem.displayName = SelectPrimitive.Item.displayName;
 
 function SelectSeparator({ className, ...props }, ref) {
     return (
-    <SelectPrimitive.Separator
-        ref={ref}
-        className={cn("-mx-1 my-1 h-px bg-muted", className)}
-        {...props}
-    />
-);}
+        <SelectPrimitive.Separator
+            ref={ref}
+            className={cn("-mx-1 my-1 h-px bg-muted", className)}
+            {...props}
+        />
+    );
+}
 SelectSeparator.displayName = SelectPrimitive.Separator.displayName;
 
 export {

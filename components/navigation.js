@@ -20,8 +20,8 @@ export default function Navigation() {
                         <Link
                             href="/"
                             className={`flex items-center gap-2 transition-colors ${isActive("/")
-                                    ? "text-primary font-medium"
-                                    : "text-muted-foreground hover:text-foreground"
+                                ? "text-primary font-medium"
+                                : "text-muted-foreground hover:text-foreground"
                                 }`}
                         >
                             <Home className="h-4 w-4" />
@@ -31,8 +31,8 @@ export default function Navigation() {
                         <Link
                             href="/shelf"
                             className={`flex items-center gap-2 transition-colors ${isActive("/shelf")
-                                    ? "text-primary font-medium"
-                                    : "text-muted-foreground hover:text-foreground"
+                                ? "text-primary font-medium"
+                                : "text-muted-foreground hover:text-foreground"
                                 }`}
                         >
                             <BookOpen className="h-4 w-4" />
@@ -42,11 +42,11 @@ export default function Navigation() {
                         <Link
                             href="/shelf/add-book"
                             className={`flex items-center gap-2 transition-colors ${isActive("/shelf/add-book")
-                                    ? "text-primary font-medium"
-                                    : "text-muted-foreground hover:text-foreground"
+                                ? "text-primary font-medium"
+                                : "text-muted-foreground hover:text-foreground"
                                 }`}
                         >
-                           <Plus className="h-4 w-4" />
+                            <Plus className="h-4 w-4" />
                             <span>Додати книгу</span>
                         </Link>
                     </div>
