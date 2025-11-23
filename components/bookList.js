@@ -1,4 +1,4 @@
-"use client"; 
+"use client";
 import { useState } from "react";
 import BookCard from "./bookCard";
 
@@ -7,7 +7,7 @@ export default function BookList({ initialBooks }) {
 
   return (
     <div className="min-h-screen bg-background">
-      
+
       <main className="container mx-auto px-4 py-8">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-foreground mb-2">Моя полиця</h1>

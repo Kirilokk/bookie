@@ -1,13 +1,25 @@
 'use client';
-import { ArrowLeft } from "lucide-react";
-import Button from "@/components/ui/button";
+import { ArrowLeft, Trash2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { useTransition, useState } from "react";
 import { redirect } from "next/navigation";
 import Image from "next/image";
 import { statusLabels } from "@/lib/constants.js";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/hooks/use_toast";
-import { setBookStatus } from "@/lib/book";
+import { setBookStatus, deleteBookById } from "@/lib/book";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+
 
 export default function BookItem({ book }) {
     const [status, setStatus] = useState(book?.status || "to_read");
@@ -46,19 +58,64 @@ export default function BookItem({ book }) {
         })
     }
 
+    function handleDelete() {
+        if (isPending) return;
+
+        startTransition(async () => {
+            const result = await deleteBookById(book.id);
+
+            if (result.success) {
+                toast({
+                    title: "Книгу видалено",
+                    description: `"${book.title}" прибрана з полиці`,
+                });
+                redirect("/shelf");
+            }
+            else {
+                toast({
+                    title: "Помилка під час видалення",
+                    description: result.error || "Не вдалося видалити книгу.",
+                });
+            }
+        })
+    }
+
+
     return (
         <div className="min-h-screen bg-background">
 
             <main className="container mx-auto px-4 py-8 max-w-4xl">
-                <Button
-                    variant="ghost"
-                    onClick={() => { redirect("/shelf"); }}
-                    className="mb-6 -ml-2"
-                >
-                    <ArrowLeft className="h-4 w-4 mr-2" />
-                    Назад до полиці
-                </Button>
+                <div className="flex items-center gap-2 mb-6">
+                    <Button
 
+                        onClick={() => { redirect("/shelf"); }}
+                    >
+                        <ArrowLeft className="h-4 w-4 mr-2" />
+                        Назад до полиці
+                    </Button>
+
+                    <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                            <Button variant="destructive" size="icon">
+                                <Trash2 className="h-4 w-4" />
+                            </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                            <AlertDialogHeader>
+                                <AlertDialogTitle>Delete this book?</AlertDialogTitle>
+                                <AlertDialogDescription>
+                                    Are you sure you want to delete "{book.title}"? This action cannot be undone.
+                                </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                <AlertDialogAction onClick={handleDelete} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+                                    Delete
+                                </AlertDialogAction>
+                            </AlertDialogFooter>
+                        </AlertDialogContent>
+                    </AlertDialog>
+                </div>
                 <div className="grid md:grid-cols-3 gap-8">
                     <div className="md:col-span-1">
                         <div
