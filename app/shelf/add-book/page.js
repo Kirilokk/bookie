@@ -1,5 +1,5 @@
 "use client";
-import { useActionState } from "react";
+import { useEffect, useActionState } from "react";
 import { useRouter } from "next/navigation";
 import { addBook } from "@/lib/actions";
 import Label from "@/components/ui/label";
@@ -8,12 +8,24 @@ import Input from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-
+import { useToast } from "@/hooks/use_toast";
 
 export default function AddNewBook() {
+    const { toast } = useToast();
     const router = useRouter();
     const [state, formAction] = useActionState(addBook, { message: null });
     const [selectStatus, setSelectStatus] = useState("");
+
+    useEffect(() => {
+        if (state?.message) {
+            toast({
+                title: "Помилка під час додавання книги",
+                description: state.message,
+                variant: "destructive",
+            });
+        }
+    }, [state.message]);
+
 
     return (
         <>
@@ -53,7 +65,7 @@ export default function AddNewBook() {
                         </div>
 
 
-                        {state.message && <p>{state.message}</p>}
+
                         <div className='flex gap-3'>
                             <Button className='flex-1'>Додати</Button>
                             <Button

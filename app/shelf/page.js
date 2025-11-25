@@ -1,8 +1,8 @@
 import BookList from "@/components/bookList";
-import { getAllMBooks } from "@/lib/book";
+import { getAllBooks } from "@/lib/book";
 
 export default async function BookShelf() {
-  const books = await getAllMBooks();
+  const books = await getAllBooks();
 
   return <BookList initialBooks={books} />;
 };

@@ -1,12 +1,12 @@
 
 import BookItem from "@/components/bookItem";
-import { getBook } from "@/lib/book";
+import { getBookById } from "@/lib/book";
 
-export default async function Book({params}) {
+export default async function Book({ params }) {
     const { bookId } = await params;
 
-    const book = await getBook(bookId);
+    const book = await getBookById(bookId);
 
 
-    return <BookItem book={book}/>
+    return <BookItem book={book} />
 };
