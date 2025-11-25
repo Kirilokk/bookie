@@ -29,16 +29,15 @@ const buttonVariants = cva(
 );
 
 
-function Button({ className, children, variant = "default", ...props }) {
-    const base = "inline-flex items-center rounded-md px-3 py-2 text-sm font-medium disabled:pointer-events-none disabled:opacity-50";
-
-    return <>
+const Button = ({ className, children, variant = "default", ...props }) => {
+    return (
         <button
             className={cn(buttonVariants({ variant, className }))}
-            {...props}>
+            {...props}
+        >
             {children}
         </button>
-    </>;
-}
+    );
+};
 
 export { Button, buttonVariants };
