@@ -13,7 +13,18 @@ const nextConfig = {
         port: "",
         pathname: "/images/**", // Matches all files in the images folder
       },
-    ],  },
+      {
+        protocol: 'http',
+        hostname: 'books.google.com',
+        pathname: '/books/content/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'books.google.com',
+        pathname: '/books/content/**',
+      },
+    ],
+  },
 };
 
 module.exports = nextConfig;
