@@ -35,9 +35,6 @@ export default function AddNewBook() {
                 const data = await response.json();
 
                 const uniqueBooks = prepareBooks(data.items || []);
-
-                console.log('Unique books ' + uniqueBooks)
-
                 setResults(uniqueBooks || []);
             } catch (error) {
                 console.error("Error fetching books:", error);
@@ -55,15 +52,24 @@ export default function AddNewBook() {
     };
 
 
-    const handleAddBook = () => {
+    const handleAddBook = async () => {
         if (!selectedBook) return;
-        console.log(selectedBook.volumeInfo)
 
-
-        toast({
-            title: "Книга успішно додана!",
-            description: `"${selectedBook.volumeInfo.title}" додана до вашої полиці.`,
-        });
+        const result = await addBook(selectedBook.volumeInfo)
+        console.log('Result status ', result.status)
+        if (result.success) {
+            toast({
+                title: "Книга успішно додана!",
+                description: `"${selectedBook.volumeInfo.title}" додана до вашої полиці.`,
+            });
+        }
+        else {
+            toast({
+                title: "Помилка додавання",
+                description: result.error || "Не вдалося додати книгу.",
+                variant: "destructive",
+            });
+        }
 
         router.push("/shelf");
     };
