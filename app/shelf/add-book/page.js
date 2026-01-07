@@ -66,7 +66,7 @@ export default function AddNewBook() {
         else {
             toast({
                 title: "Помилка додавання",
-                description: result.error || "Не вдалося додати книгу.",
+                description: result.error || "Не вдалося додати книгу. Спробуйте пізніше",
                 variant: "destructive",
             });
         }
