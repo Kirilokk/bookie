@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use_toast";
 import { Search, Plus, Loader2 } from "lucide-react";
 import { prepareBooks, formatPublisherName } from "@/lib/utils";
-
+import { isBookInShelf } from "@/lib/book";
 
 export default function AddNewBook() {
     const { toast } = useToast();
@@ -47,7 +47,18 @@ export default function AddNewBook() {
         return () => clearTimeout(timer);
     }, [query]);
 
-    const handleSelectBook = (book) => {
+    async function handleSelectBook(book) {
+        const bookIsInShelf = await isBookInShelf(book.id)
+
+        if (bookIsInShelf) {
+            toast({
+                title: "Ви вже маєте цю книгу",
+                description: `"${book.volumeInfo.title}" вже є в Вашій бібліотеці`,
+            });
+            return;
+        }
+
+
         setSelectedBook(book);
     };
 
@@ -55,7 +66,7 @@ export default function AddNewBook() {
     const handleAddBook = async () => {
         if (!selectedBook) return;
 
-        const result = await addBook(selectedBook.volumeInfo)
+        const result = await addBook(selectedBook)
         console.log('Result status ', result.status)
         if (result.success) {
             toast({
