@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use_toast";
 import { Search, Plus, Loader2 } from "lucide-react";
 import { prepareBooks, formatPublisherName } from "@/lib/utils";
-import { isBookInShelf } from "@/lib/book";
+import { isBookInShelf, getShelfBookIds } from "@/lib/book";
 
 export default function AddNewBook() {
     const { toast } = useToast();
@@ -18,6 +18,17 @@ export default function AddNewBook() {
     const [results, setResults] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [selectedBook, setSelectedBook] = useState(null);
+    const [shelfIds, setShelfIds] = useState(new Set());
+
+
+    useEffect(() => {
+        async function loadShelf() {
+            const ids = await getShelfBookIds();
+            setShelfIds(new Set(ids.map(r => r.api_book_id)));
+        }
+        loadShelf();
+    }, []);
+
 
     useEffect(() => {
         if (query.length < 5) {
@@ -108,41 +119,63 @@ export default function AddNewBook() {
 
                     {!isLoading && results.length > 0 && (
                         <div className="space-y-2">
-                            {results.map((book) => (
-                                <Card
-                                    key={book.id}
-                                    className={`p-6 cursor-pointer transition-all ${selectedBook?.id === book.id
-                                        ? "ring-2 ring-primary bg-primary/5"
-                                        : "hover:bg-muted/50"
-                                        }`}
-                                    onClick={() => handleSelectBook(book)}
-                                >
-                                    <div className="flex items-center justify-between gap-4">
-                                        <div className="flex-1 min-w-0">
-                                            <p className="font-medium text-foreground">{book.volumeInfo.title}</p>
-                                            {book.volumeInfo.authors && (
-                                                <p className="text-sm text-muted-foreground">
-                                                    {book.volumeInfo.authors?.join(", ")}
-                                                </p>
-                                            )}
-                                            {book.volumeInfo.publisher && (
-                                                <p className="text-sm text-muted-foreground">
-                                                    <b>Видавництво:</b> {formatPublisherName(book.volumeInfo.publisher)}
-                                                </p>
-                                            )}
-                                        </div>
-                                        {book.volumeInfo.imageLinks?.smallThumbnail && (
-                                            <img
-                                                src={book.volumeInfo.imageLinks.smallThumbnail}
-                                                alt={book.volumeInfo.title}
+                            {results.map((book) => {
+                                const isDuplicate = shelfIds.has(book.id);
 
-                                                className="w-16 h-26 object-cover rounded shadow-sm flex-shrink-0"
 
+                                return (
+                                    <Card
+                                        key={book.id}
+                                        className={`p-6 cursor-pointer relative transition-all ${selectedBook?.id === book.id
+                                            ? "ring-2 ring-primary bg-primary/5"
+                                            : "hover:bg-muted/50"
+                                            }`}
+                                        onClick={() => handleSelectBook(book)}
+                                    >
+                                        {isDuplicate && (
+                                            <div
+                                                className="absolute inset-0 pointer-events-none"
+                                                style={{
+                                                    background: `repeating-linear-gradient(
+                                                    -45deg,
+                                                    transparent,
+                                                    transparent 8px,
+                                                    rgba(0, 0, 0, 0.15) 8px,
+                                                    rgba(0, 0, 0, 0.15) 10px
+                                                )`
+                                                }}
                                             />
                                         )}
-                                    </div>
-                                </Card>
-                            ))}
+                                        <div className="flex items-center justify-between gap-4">
+                                            <div className="flex-1 min-w-0">
+                                                <p className={`font-medium truncate ${isDuplicate ? "text-muted-foreground" : "text-foreground"}`}>{book.volumeInfo.title}</p>
+                                                {book.volumeInfo.authors && (
+                                                    <p className="text-sm text-muted-foreground">
+                                                        {book.volumeInfo.authors?.join(", ")}
+                                                    </p>
+                                                )}
+                                                {book.volumeInfo.publisher && (
+                                                    <p className="text-sm text-muted-foreground">
+                                                        <b>Видавництво:</b> {formatPublisherName(book.volumeInfo.publisher)}
+                                                    </p>
+                                                )}
+                                                {isDuplicate && (
+                                                    <p className="text-xs text-muted-foreground mt-1 italic">Вже в полиці &#128218;</p>
+                                                )}
+                                            </div>
+                                            {book.volumeInfo.imageLinks?.smallThumbnail && (
+                                                <img
+                                                    src={book.volumeInfo.imageLinks.smallThumbnail}
+                                                    alt={book.volumeInfo.title}
+
+                                                    className={`w-12 h-16 object-cover rounded shadow-sm flex-shrink-0 ${isDuplicate ? "grayscale" : ""}`}
+
+                                                />
+                                            )}
+                                        </div>
+                                    </Card>
+                                )
+                            })}
                         </div>
                     )}
 
