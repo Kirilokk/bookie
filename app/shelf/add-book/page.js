@@ -121,7 +121,7 @@ export default function AddNewBook() {
                         <div className="space-y-2">
                             {results.map((book) => {
                                 const isDuplicate = shelfIds.has(book.id);
-
+                                const isUaLang = book.volumeInfo.language == 'uk'
 
                                 return (
                                     <Card
@@ -148,7 +148,7 @@ export default function AddNewBook() {
                                         )}
                                         <div className="flex items-center justify-between gap-4">
                                             <div className="flex-1 min-w-0">
-                                                <p className={`font-medium truncate ${isDuplicate ? "text-muted-foreground" : "text-foreground"}`}>{book.volumeInfo.title}</p>
+                                                <p className={`font-medium truncate ${isDuplicate ? "text-muted-foreground" : "text-foreground"}`}>{book.volumeInfo.title} {isUaLang && "💙💛"}</p>
                                                 {book.volumeInfo.authors && (
                                                     <p className="text-sm text-muted-foreground">
                                                         {book.volumeInfo.authors?.join(", ")}
