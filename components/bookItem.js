@@ -122,7 +122,7 @@ export default function BookItem({ book }) {
                             className="w-full aspect-[2/3] rounded-lg flex items-center justify-center text-3xl font-bold text-card-foreground/60"
                             style={{ backgroundColor: book.cover_color }}
                         >
-                            <Image
+                            <img
                                 src={`https://${process.env.NEXT_PUBLIC_REMOTE_IMAGE_HOST}/${book.image_url}`}
                                 alt={book.title}
                                 width={100}

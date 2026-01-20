@@ -13,18 +13,26 @@ const statusColors = {
 export default function BookCard({ book }) {
     return (
         <Link href={`shelf/${book.id}`}>
-            <div className="group bg-card border border-border rounded-lg p-5 hover:shadow-lg hover:border-primary/30 transition-all duration-300">
+            <div className="group bg-card border border-border rounded-xl p-4 hover:shadow-xl hover:border-primary/40 transition-all duration-500 hover:-translate-y-1">
                 <div
-                    className="w-full h-48 rounded-md mb-4 flex items-center justify-center text-card-foreground/60 font-medium transition-transform group-hover:scale-105"
+                    className="relative aspect-[2/3] mb-4 overflow-hidden rounded-lg shadow-md group-hover:shadow-xl transition-shadow duration-500"
                     style={{ backgroundColor: book.cover_color }}
                 >
-                    <Image
-                        src={`https://${process.env.NEXT_PUBLIC_REMOTE_IMAGE_HOST}/${book.image_url}`}
-                        alt={book.title}
-                        width={100}
-                        height={150}
-                        className="object-contain max-h-full"
-                    />
+                    {book.image_url ? (
+                        <img
+                            src={`https://${process.env.NEXT_PUBLIC_REMOTE_IMAGE_HOST}/${book.image_url}`}
+                            alt={book.title}
+
+                            className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
+                        />
+                    ) : (
+                        <div
+                            className="w-full h-full flex items-center justify-center text-center text-sm font-semibold text-white/90 transition-transform group-hover:scale-105 p-3 leading-tight"
+                        >
+                            <span className="line-clamp-4">{book.title}</span>
+                        </div>
+                    )
+                    }
                 </div>
 
                 <h3 className="font-semibold text-foreground mb-1 line-clamp-2 group-hover:text-primary transition-colors">
