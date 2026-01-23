@@ -19,6 +19,7 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { prettifyBookTitle } from "@/lib/utils";
 
 
 export default function BookItem({ book }) {
@@ -63,11 +64,12 @@ export default function BookItem({ book }) {
 
         startTransition(async () => {
             const result = await deleteBookById(book.id);
+            const bookTitle = prettifyBookTitle(book.title)
 
             if (result.success) {
                 toast({
                     title: "Книгу видалено",
-                    description: `"${book.title}" прибрана з полиці`,
+                    description: `"${bookTitle}" прибрана з полиці`,
                 });
                 redirect("/shelf");
             }
