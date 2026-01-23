@@ -7,7 +7,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use_toast";
 import { Search, Plus, Loader2 } from "lucide-react";
-import { prepareBooks, formatPublisherName } from "@/lib/utils";
+import { prepareBooks, formatPublisherName, prettifyBookTitle } from "@/lib/utils";
 import { isBookInShelf, getShelfBookIds } from "@/lib/book";
 
 export default function AddNewBook() {
@@ -78,11 +78,13 @@ export default function AddNewBook() {
         if (!selectedBook) return;
 
         const result = await addBook(selectedBook)
-        console.log('Result status ', result.status)
+        const bookTitle = prettifyBookTitle(selectedBook.volumeInfo.title)
+
+
         if (result.success) {
             toast({
                 title: "Книга успішно додана!",
-                description: `"${selectedBook.volumeInfo.title}" додана до вашої полиці.`,
+                description: `"${bookTitle}" додана до вашої полиці.`,
             });
         }
         else {
