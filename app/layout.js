@@ -1,7 +1,7 @@
 import "./globals.css";
 import Navigation from "@/components/navigation";
 import { Toaster } from "@/components/ui/toaster";
-
+import ScrollToTop from "@/components/scrollTop";
 
 export const metadata = {
   title: "Bookie",
@@ -12,10 +12,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <Navigation/> 
+        <Navigation />
+        <ScrollToTop />
         <Toaster />
         {children}
-        </body>
+      </body>
     </html>
   );
 }

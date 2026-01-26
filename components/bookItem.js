@@ -1,9 +1,8 @@
 'use client';
-import { ArrowLeft, Trash2 } from "lucide-react";
+import { ArrowLeft, BookOpen, Hash, Trash2, UserStar, LibraryBig } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTransition, useState } from "react";
 import { redirect } from "next/navigation";
-import Image from "next/image";
 import { statusLabels } from "@/lib/constants.js";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/hooks/use_toast";
@@ -82,7 +81,7 @@ export default function BookItem({ book }) {
         })
     }
 
-
+    console.log(book)
     return (
         <div className="min-h-screen bg-background">
 
@@ -124,20 +123,58 @@ export default function BookItem({ book }) {
                             className="w-full aspect-[2/3] rounded-lg flex items-center justify-center text-3xl font-bold text-card-foreground/60"
                             style={{ backgroundColor: book.cover_color }}
                         >
-                            <img
-                                src={`https://${process.env.NEXT_PUBLIC_REMOTE_IMAGE_HOST}/${book.image_url}`}
-                                alt={book.title}
-                                width={100}
-                                height={150}
-                                className="object-contain max-h-full"
-                            />
+                            {book.image_url ? (
+                                <img
+                                    src={`https://${process.env.NEXT_PUBLIC_REMOTE_IMAGE_HOST}/${book.image_url}`}
+                                    alt={book.title}
+
+                                    className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105 rounded"
+                                />
+                            ) : (
+                                <div
+                                    className="w-full h-full flex items-center justify-center text-center text-sm font-semibold text-white/90 transition-transform group-hover:scale-105 p-3 leading-tight"
+                                >
+                                    <span className="line-clamp-4">{book.title}</span>
+                                </div>
+                            )
+                            }
                         </div>
                     </div>
 
                     <div className="md:col-span-2 space-y-6">
                         <div>
                             <h1 className="text-3xl font-bold text-foreground mb-2">{book.title}</h1>
-                            <p className="text-lg text-muted-foreground">{book.author}</p>
+                            {(book.page_count || book.isbn) && (
+                                <Card className="p-6">
+                                    <h2 className="text-lg font-semibold mb-4">Деталі книги</h2>
+                                    <div className="space-y-3">
+                                        {book.author && (
+                                            <div className="flex items-center gap-3 text-muted-foreground">
+                                                <UserStar className="h-5 w-5 text-primary" />
+                                                <span>{book.author}</span>
+                                            </div>
+                                        )}
+                                        {book.publisher && (
+                                            <div className="flex items-center gap-3 text-muted-foreground">
+                                                <LibraryBig className="h-5 w-5 text-primary" />
+                                                <span>{book.publisher}</span>
+                                            </div>
+                                        )}
+                                        {book.page_count && (
+                                            <div className="flex items-center gap-3 text-muted-foreground">
+                                                <BookOpen className="h-5 w-5 text-primary" />
+                                                <span>{book.page_count} сторінок</span>
+                                            </div>
+                                        )}
+                                        {!!book.isbns?.length && (
+                                            <div className="flex items-center gap-3 text-muted-foreground">
+                                                <Hash className="h-5 w-5 text-primary" />
+                                                <span>ISBN13: {book.isbns[1]}</span>
+                                            </div>
+                                        )}
+                                    </div>
+                                </Card>
+                            )}
                         </div>
                         <Card className="p-6">
                             <h2 className="text-lg font-semibold mb-4">Статус читання</h2>

@@ -27,7 +27,7 @@ export default function BookCard({ book }) {
                         />
                     ) : (
                         <div
-                            className="w-full h-full flex items-center justify-center text-center text-sm font-semibold text-white/90 transition-transform group-hover:scale-105 p-3 leading-tight"
+                            className="w-full h-full flex items-center justify-center text-center text-xl font-semibold text-white/90 transition-transform group-hover:scale-105 p-3 leading-tight"
                         >
                             <span className="line-clamp-4">{book.title}</span>
                         </div>
