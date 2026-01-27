@@ -1,5 +1,5 @@
 'use client';
-import { ArrowLeft, BookOpen, Hash, Trash2, UserStar, LibraryBig } from "lucide-react";
+import { ArrowLeft, BookOpen, Hash, Trash2, UserStar, LibraryBig, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTransition, useState } from "react";
 import { redirect } from "next/navigation";
@@ -170,6 +170,12 @@ export default function BookItem({ book }) {
                                             <div className="flex items-center gap-3 text-muted-foreground">
                                                 <Hash className="h-5 w-5 text-primary" />
                                                 <span>ISBN13: {book.isbns[1]}</span>
+                                            </div>
+                                        )}
+                                        {!!book.publish_date && (
+                                            <div className="flex items-center gap-3 text-muted-foreground">
+                                                <Calendar className="h-5 w-5 text-primary" />
+                                                <span>{book.publish_date}</span>
                                             </div>
                                         )}
                                     </div>
