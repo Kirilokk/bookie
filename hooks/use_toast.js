@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 
 const TOAST_LIMIT = 1;
-const TOAST_REMOVE_DELAY = 5000;
+const TOAST_REMOVE_DELAY = 2000;
 
 let count = 0;
 
@@ -33,19 +33,13 @@ export const reducer = (state, action) => {
     case "DISMISS_TOAST": {
       const { toastId } = action;
 
-      if (toastId) {
-        addToRemoveQueue(toastId);
-      } else {
-        state.toasts.forEach((toast) => addToRemoveQueue(toast.id));
+      if (toastId === undefined) {
+        return { ...state, toasts: [] };
       }
 
       return {
         ...state,
-        toasts: state.toasts.map((t) =>
-          t.id === toastId || toastId === undefined
-            ? { ...t, open: false }
-            : t
-        ),
+        toasts: state.toasts.filter((t) => t.id !== toastId),
       };
     }
 
@@ -98,22 +92,12 @@ function toast(props) {
     },
   });
 
-  return { id, dismiss, update };
-}
-
-const addToRemoveQueue = (toastId) => {
-  if (toastTimeouts.has(toastId)) return;
-
-  const timeout = setTimeout(() => {
-    toastTimeouts.delete(toastId);
-    dispatch({
-      type: "REMOVE_TOAST",
-      toastId,
-    });
+  setTimeout(() => {
+    dismiss();
   }, TOAST_REMOVE_DELAY);
 
-  toastTimeouts.set(toastId, timeout);
-};
+  return { id, dismiss, update };
+}
 
 function useToast() {
   const [state, setState] = useState(memoryState);

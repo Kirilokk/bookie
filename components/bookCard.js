@@ -10,12 +10,14 @@ const statusColors = {
     read: "bg-primary/20 text-primary",
 };
 
-export default function BookCard({ book }) {
+export default function BookCard({ book, size = "default" }) {
+
+    const isSmall = size === "small";
     return (
         <Link href={`shelf/${book.id}`}>
-            <div className="group bg-card border border-border rounded-xl p-4 hover:shadow-xl hover:border-primary/40 transition-all duration-500 hover:-translate-y-1">
+            <div className={`group bg-card border border-border rounded-xl hover:shadow-xl hover:border-primary/40 transition-all duration-500 hover:-translate-y-1 ${isSmall ? "p-3" : "p-4"}`}>
                 <div
-                    className="relative aspect-[2/3] mb-4 overflow-hidden rounded-lg shadow-md group-hover:shadow-xl transition-shadow duration-500"
+                    className={`relative aspect-[2/3] overflow-hidden rounded-lg shadow-md group-hover:shadow-xl transition-shadow duration-500 ${isSmall ? "mb-3" : "mb-4"}`}
                     style={{ backgroundColor: book.cover_color }}
                 >
                     {book.image_url ? (
@@ -35,13 +37,13 @@ export default function BookCard({ book }) {
                     }
                 </div>
 
-                <h3 className="font-semibold text-foreground mb-1 line-clamp-2 group-hover:text-primary transition-colors">
+                <h3 className={`font-semibold text-foreground mb-1 line-clamp-2 group-hover:text-primary transition-colors ${isSmall ? "text-xs" : "text-sm"}`}>
                     {book.title}
                 </h3>
-                <p className="text-sm text-muted-foreground mb-3">{book.author}</p>
+                <p className={`text-sm text-muted-foreground mb-3 ${isSmall ? "text-[10px] mb-2" : "text-xs mb-3"}`}>{book.author}</p>
 
 
-                <Badge className={`${statusColors[book.status]} border-0`}>
+                <Badge className={`${statusColors[book.status]} border-0 ${isSmall ? "text-[10px] px-2 py-0.5" : "text-xs"}`}>
                     {statusLabels[book.status]}
                 </Badge>
 
