@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BookOpen, Plus, Library, Home } from "lucide-react";
+import { BookOpen, Plus, Library, Home, LogIn } from "lucide-react";
 
 export default function Navigation() {
     const currentPath = usePathname();
@@ -48,6 +48,16 @@ export default function Navigation() {
                         >
                             <Plus className="h-4 w-4" />
                             <span>Додати книгу</span>
+                        </Link>
+                        <Link
+                            href="/login"
+                            className={`flex items-center gap-2 transition-colors ${isActive("/login") || isActive("/register")
+                                ? "text-primary font-medium"
+                                : "text-muted-foreground hover:text-foreground"
+                                }`}
+                        >
+                            <LogIn className="h-4 w-4" />
+                            <span>Увійти</span>
                         </Link>
                     </div>
                 </div>
